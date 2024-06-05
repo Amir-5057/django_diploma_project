@@ -59,7 +59,7 @@
                                     Мой профиль
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item  text-white" href="carts/cart.html">Корзина</a></li>
+
                                     <li><a class="dropdown-item  text-white" href="{% url "user:profile" %}">Личный кабинет</a>
                                     </li>
                                     {% if user.is_admin or user.is_staff %}
@@ -73,7 +73,7 @@
                             </li>
                         {% endif %}
                     </ul>
-                    <form class="d-flex" role="search" action="{% url "catalog:search" %}" method="get">
+                    <form class="d-flex" role="search" action="{% url "catalog:search" %}" methood="get">
                         <input class="form-control me-2" type="search" name="q" placeholder="Search" aria-label="Search">
                         <button class="btn btn-outline-success text-white" type="submit">Поиск</button>
                     </form>
@@ -96,7 +96,7 @@
                     <ul class="dropdown-menu bg-dark" data-bs-theme="dark">
                         {% tag_categories as categories %}
                         {% for category in categories %}
-                            <li><a class="dropdown-item text-white" href="{% url "catalog:index" category.slug %}">{{category.name}}</a></li>
+                            <li><a class="dropdown-item text-white" href="{% url "catalog:index" category.id %}">{{category.name}}</a></li>
                         {% endfor %}
 
                     </ul>
@@ -106,6 +106,7 @@
                 <!-- Закончилась разметка модального окна -->
             </div>
         </div>
+
         <!-- Контент -->
         <div class="container">
             <div class="row mt-1">
@@ -121,11 +122,21 @@
         </div>
     </section>
 
-    {% block footer %}{% endblock %}
+<main>
+    {% block messages %}
+    {% include 'includes/_massages.html' %}
+    {% endblock messages %}
+</main>
+
+
 
     <script src="{% static "deps/js/jquery/jquery-3.7.0.min.js" %}"></script>
     <script src="{% static "deps/js/jquery-ajax.js" %}"></script>
     <script src="{% static "deps/js/bootstrap/bootstrap.bundle.min.js" %}"></script>
 </body>
+{% include 'includes/_footer.html' %}
+
+{% include 'includes/_scripts.html' %}
+
 
 </html>

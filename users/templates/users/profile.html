@@ -120,7 +120,7 @@
                                             <tbody>
                                                 {% for item in order.orderitem_set.all %}
                                                 <tr>
-                                                    <td><a class="text-white" href="{% url 'goods:product' item.product.slug %}">{{ item.product.name }}</a></td>
+                                                    <td><a class="text-white" href="{% url 'goods:product' item.product.id %}">{{ item.product.name }}</a></td>
                                                     <td>{{ item.quantity }}</td>
                                                     <td>{{ item.price }}</td>
                                                     <td>{{ item.products_price }}</td>

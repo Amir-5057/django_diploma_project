@@ -1,7 +1,7 @@
-from django.http import HttpResponse
+from goods.models import *
 from django.shortcuts import render
 
-from goods.models import Categories
+
 
 
 def index(request):
@@ -23,3 +23,7 @@ def about(request):
     }
 
     return render(request, 'main/about.html', context)
+
+
+
+

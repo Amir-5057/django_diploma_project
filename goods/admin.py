@@ -1,9 +1,10 @@
 from django.contrib import admin
 
-from goods.models import Categories, Products
+from goods.models import Categories, Products, Comment
 
 # admin.site.register(Categories)
 # admin.site.register(Products)
+# admin.site.register(Comment)
 
 
 @admin.register(Categories)
@@ -21,9 +22,10 @@ class ProductsAdmin(admin.ModelAdmin):
     fields = [
         "name",
         "category",
-        "slug",
         "description",
         "image",
         ("price", "discount"),
+        'slug'
+
         "quantity",
     ]

@@ -6,6 +6,7 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 from carts.models import Cart
 from orders.models import Order, OrderItem
+from django.contrib.auth.views import LoginView
 
 from users.forms import ProfileForm, UserLoginForm, UserRegistrationForm
 
@@ -30,7 +31,8 @@ def login(request):
                 redirect_page = request.POST.get('next', None)
                 if redirect_page and redirect_page != reverse('user:logout'):
                     return HttpResponseRedirect(request.POST.get('next'))
-                    
+
+
                 return HttpResponseRedirect(reverse('main:index'))
     else:
         form = UserLoginForm()

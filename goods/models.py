@@ -1,6 +1,6 @@
 from django.db import models
 from django.urls import reverse
-
+from users.models import User
 
 class Categories(models.Model):
     name = models.CharField(max_length=150, unique=True, verbose_name='Название')
@@ -17,7 +17,7 @@ class Categories(models.Model):
 
 class Products(models.Model):
     name = models.CharField(max_length=150, unique=True, verbose_name='Название')
-    slug = models.SlugField(max_length=200, unique=True, blank=True, null=True, verbose_name='URL')
+    slug = models.CharField(max_length=100, unique=True, verbose_name='URL')
     description = models.TextField(blank=True, null=True, verbose_name='Описание')
     image = models.ImageField(upload_to='goods_images', blank=True, null=True, verbose_name='Изображение')
     price = models.DecimalField(default=0.00, max_digits=7, decimal_places=2, verbose_name='Цена')
@@ -30,17 +30,14 @@ class Products(models.Model):
         db_table = 'product'
         verbose_name = 'Продукт'
         verbose_name_plural = 'Продукты'
-        ordering = ("id",)
+
 
     def __str__(self):
         return f'{self.name} Количество - {self.quantity}'
 
     def get_absolute_url(self):
         return reverse("catalog:product", kwargs={"product_slug": self.slug})
-    
 
-    def display_id(self):
-        return f"{self.id:05}"
 
 
     def sell_price(self):
@@ -48,3 +45,16 @@ class Products(models.Model):
             return round(self.price - self.price*self.discount/100, 2)
         
         return self.price
+
+
+class Comment(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE,
+                               verbose_name="Автор")
+    products = models.ForeignKey(Products, on_delete=models.CASCADE,
+                                verbose_name = "Статья")
+    created_at = models.DateTimeField(auto_now_add=True,
+                                      verbose_name = "Дата добавления")
+    text = models.TextField(verbose_name="Камментарий")
+
+    def __str__(self):
+        return self.author.username

@@ -16,7 +16,7 @@
             Фильтры
         </button>
 
-        <form action="{% if request.GET.q %}{% url "catalog:search" %}{% else %}{% url "catalog:index" slug_url %}{% endif %}" method="get" class="dropdown-menu bg-dark" data-bs-theme="dark">
+        <form action="{% if request.GET.q %}{% url "catalog:search" %}{% else %}{% url "catalog:index" category_id %}{% endif %}" method="get" class="dropdown-menu bg-dark" data-bs-theme="dark">
             <div class="form-check text-white mx-3">
                 <input class="form-check-input" type="checkbox" name="on_sale" id="flexCheckDefault" value="on" {% if request.GET.on_sale == 'on' %}checked{% endif %}>
                 {% if request.GET.q %}
@@ -69,7 +69,7 @@
                     <img src="{% static "deps/images/Not found image.png" %}" class="card-img-top" alt="...">
                 {% endif %}
                 <div class="card-body">
-                    <a href="{% url "catalog:product" product.slug %}">
+                    <a href="{% url "catalog:product" product.id %}">
                         <p class="card-title">
                             {% autoescape off %}
                                 {% if product.headline %}
@@ -141,13 +141,9 @@
         </ul>
     </nav>
 {% endif %}
+
+
+
 {% endblock  %}
 
 
-{% block footer %}
-<footer class="py-4 bg-dark">
-    <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; Home Python Hub Studio 2023</p>
-    </div>
-</footer>
-{% endblock  %}
